@@ -1,47 +1,67 @@
-# vim: expandtab tabstop=2 shiftwidth=2
-name: CI
-
-on:
-  push:
-    branches: main
-  pull_request:
-    branches: main
-  release:
-    types:
-      - created
-  workflow_dispatch:
+name: Build
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: write
 
 jobs:
-  build:
-    name: Build Ghidra FindCrypt extension
-    strategy:
-      fail-fast: false
-      matrix:
-        ghidra-version:
-          - 'latest'
-          - '10.1.4'
-          - '10.1.3'
-          - '10.1.2'
-          - '10.0.4'
-          - '10.0.3'
-          - '10.0.2'
-          - '10.0.1'
-          # Ghidra versions prior to 9.2 lack the Gson JSON library, and are not supported.
+  build_for_ghidra:
     runs-on: ubuntu-latest
-    container: ghcr.io/torgotorgo/ghidra-container:${{ matrix.ghidra-version }}
+
+    strategy:
+      matrix:
+        ghidra:
+          - "10.4"
+          - "10.3.3"
+          - "10.3.2"
+          - "10.3.1"
+          - "10.3"
+          - "10.2.3"
+          - "10.2.2"
+          - "10.2.1"
+          - "10.2"
+          - "10.1.5"
+          - "10.1.4"
+          - "10.1.3"
+          - "10.1.2"
+          - "10.1.1"
+          - "10.1"
+          - "10.0.4"
+          - "10.0.3"
+          - "10.0.2"
+          - "10.0.1"
+          - "10.0"
+
+
     steps:
-      - name: "Clone FindCrypt"
-        uses: actions/checkout@v2
-      - name: Compile FindCrypt - ${{ matrix.ghidra-version }}
-        run: |
-          cd FindCrypt
-          gradle
-          ls -lah dist/
-      - name: Upload FindCrypt - ${{ matrix.ghidra-version }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: ghidra_${{ matrix.ghidra-version }}_FindCrypt
-          path: |
-            README.md
-            FindCrypt/dist/*.zip
-          if-no-files-found: error
+    - name: Clone Repository
+      uses: actions/checkout@v2
+  
+    - name: Install Java
+      uses: actions/setup-java@v1
+      with:
+        java-version: "17"
+        java-package: jdk
+        architecture: x64
+
+    - name: Install Ghidra ${{ matrix.version }}
+      uses: er28-0652/setup-ghidra@master
+      with:
+        version: ${{ matrix.ghidra }}
+
+    - name: Build the extension for Ghidra ${{ matrix.version }}
+      uses: gradle/gradle-build-action@v2.4.2
+      with:
+        gradle-version: 7.3
+        arguments: -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
+
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      if: github.ref == 'refs/heads/main'
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file_glob: true
+        file: dist/*ghidra-systemmap.zip
+        prerelease: true
+        overwrite: true
+        body: "Nightly release"
