@@ -60,7 +60,7 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file_glob: true
-        file: dist/*ghidra-systemmap.zip
+        file: dist/*ghidra-findcrypt.zip
         prerelease: true
         overwrite: true
         body: "Nightly release"
