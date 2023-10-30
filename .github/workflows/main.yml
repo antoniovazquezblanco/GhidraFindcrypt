@@ -53,6 +53,7 @@ jobs:
       with:
         gradle-version: 7.3
         arguments: -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
+        build-root-directory: FindCrypt
 
 
     - name: Upload binaries to release
