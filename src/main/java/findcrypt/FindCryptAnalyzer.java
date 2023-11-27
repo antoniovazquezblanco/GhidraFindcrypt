@@ -69,7 +69,7 @@ public class FindCryptAnalyzer extends AbstractAnalyzer {
 		if (this.database == null) {
 			try {
 				this.database = new CryptDatabase();
-				ResourceFile resourceFile = Application.getModuleFile("FindCrypt", "data/database.json");
+				ResourceFile resourceFile = Application.getModuleDataFile("database.json");
 				Msg.info(this, "Loading FindCrypt signature database from file");
 
 				Reader reader = Files.newBufferedReader(resourceFile.getFile(true).toPath());
