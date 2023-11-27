@@ -27,3 +27,34 @@ The labels are prefixed with `CRYPT_` to group them together.
 The analysis will also try to set the datatype for the found constants, but if a datatype has been applied by another analysis module that other module will take precedence.
 
 A comment is always placed when a crypt constant is found to tell you the type and the size of the constant, just in case the datatype wasn't applied.
+
+
+## Development
+
+### Development environment
+
+1. First, install [Eclipse for Java Developers](https://www.eclipse.org/downloads/packages/).
+2. Once installed, open Eclipse and click on `Help` > `Install New Software...`. A window will pop up.
+3. Click on `Add...` > `Archive...`. It will open a file selection dialog. In this dialog, please select `GhidraDev.zip` file from `<Your Ghidra install dir>/Extensions/Eclipse/GhidraDev/`.
+4. Check Ghidra category (or GhidraDev entry).
+5. Repeatedly click `Next`.
+6. Accept the terms of the license agreement.
+7. Check the `Unsigned` table entry and click `Trust Selected`.
+8. Restart Eclipse...
+
+### Importing the project
+
+After all of that, if you still want to develop and/or contribute to the project, first clone this repository:
+```bash
+git clone git@github.com:antoniovazquezblanco/GhidraFindcrypt.git
+```
+
+In Eclipse:
+1. Click on `File` > `Import...`.
+2. In the dialog click on `General` > `Projects from Folder or Archive` > `Next`.
+3. Click on `Directory...` and select the `GhidraFindcrypt` folder you have just cloned.
+4. Click on `Finish`.
+5. Right click on the just imported project `GhidraDev` > `Link Ghidra...`.
+6. Select your desired Ghidra installation and click on `Finish`.
+
+You are now ready to develop!
