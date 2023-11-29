@@ -35,7 +35,7 @@ jobs:
     - name: Install Ghidra
       uses: er28-0652/setup-ghidra@master
       with:
-        version: latest
+        version: "latest"
 
     - name: Build
       uses: gradle/gradle-build-action@v2.4.2
