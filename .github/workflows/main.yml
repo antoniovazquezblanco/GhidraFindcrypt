@@ -49,7 +49,7 @@ jobs:
         version: ${{ matrix.ghidra }}
 
     - name: Build the extension for Ghidra ${{ matrix.version }}
-      uses: gradle/gradle-build-action@v2.4.2
+      uses: gradle/gradle-build-action@v2.10.0
       with:
         gradle-version: 7.3
         arguments: -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
