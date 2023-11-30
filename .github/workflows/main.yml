@@ -54,11 +54,10 @@ jobs:
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/v')
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file_glob: true
         file: dist/*GhidraFindcrypt.zip
-        prerelease: true
+        prerelease: ${{ github.ref == 'refs/heads/main' }}
         overwrite: true
-        body: "Nightly release"
