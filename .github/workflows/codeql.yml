@@ -32,10 +32,13 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    - name: Install Ghidra
-      uses: er28-0652/setup-ghidra@master
+    - name: Install Java
+      uses: actions/setup-java@v1
       with:
-        version: "latest"
+        java-version: "17"
+
+    - name: Install Ghidra
+      uses: antoniovazquezblanco/setup-ghidra@v1.0.0
 
     - name: Build
       uses: gradle/gradle-build-action@v2.4.2
