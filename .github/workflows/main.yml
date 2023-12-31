@@ -4,7 +4,7 @@ permissions:
   contents: write
 
 jobs:
-  build_for_ghidra:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -31,13 +31,13 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Install Ghidra ${{ matrix.version }}
+    - name: Install Ghidra ${{ matrix.ghidra }}
       uses: antoniovazquezblanco/setup-ghidra@v1.2.0
       with:
         auth_token: ${{ secrets.GITHUB_TOKEN }}
         version: ${{ matrix.ghidra }}
 
-    - name: Build the extension for Ghidra ${{ matrix.version }}
+    - name: Build the extension for Ghidra ${{ matrix.ghidra }}
       uses: gradle/gradle-build-action@v2.11.1
       with:
         gradle-version: 7.3
