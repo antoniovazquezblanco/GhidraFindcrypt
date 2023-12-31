@@ -32,7 +32,7 @@ jobs:
         java-version: '17'
 
     - name: Install Ghidra ${{ matrix.version }}
-      uses: antoniovazquezblanco/setup-ghidra@v1.1.0
+      uses: antoniovazquezblanco/setup-ghidra@v1.2.0
       with:
         auth_token: ${{ secrets.GITHUB_TOKEN }}
         version: ${{ matrix.ghidra }}
