@@ -32,17 +32,17 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Install Gradle
+      uses: gradle/actions/setup-gradle@v3
+
     - name: Install Ghidra ${{ matrix.ghidra }}
       uses: antoniovazquezblanco/setup-ghidra@v1.2.0
       with:
         auth_token: ${{ secrets.GITHUB_TOKEN }}
         version: ${{ matrix.ghidra }}
 
-    - name: Build the extension for Ghidra ${{ matrix.ghidra }}
-      uses: gradle/gradle-build-action@v2.12.0
-      with:
-        gradle-version: 7.3
-        arguments: -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
+    - name: Build
+      run: gradle buildExtension -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4

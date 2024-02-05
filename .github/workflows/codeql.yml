@@ -38,16 +38,16 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Install Gradle
+      uses: gradle/actions/setup-gradle@v3
+
     - name: Install Ghidra
       uses: antoniovazquezblanco/setup-ghidra@v1.2.0
       with:
         auth_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build
-      uses: gradle/gradle-build-action@v2.12.0
-      with:
-        gradle-version: 7.3
-        arguments: -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
+      run: gradle buildExtension -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
