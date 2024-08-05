@@ -39,7 +39,7 @@ jobs:
         java-version: '21'
 
     - name: Install Gradle
-      uses: gradle/actions/setup-gradle@v3
+      uses: gradle/actions/setup-gradle@v4
 
     - name: Install Ghidra
       uses: antoniovazquezblanco/setup-ghidra@v2.0.4
