@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         ghidra:
+          - "11.2"
           - "11.1.2"
           - "11.1.1"
           - "11.1"
@@ -43,13 +44,13 @@ jobs:
         version: ${{ matrix.ghidra }}
 
     - name: Build
-      run: gradle buildExtension -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
+      run: gradle buildExtension
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: Findcrypt_Ghidra_${{ matrix.ghidra }}
-        path: dist/*GhidraFindcrypt.zip
+        path: dist/*.zip
 
   release:
     runs-on: "ubuntu-latest"
@@ -71,7 +72,7 @@ jobs:
         automatic_release_tag: "latest"
         prerelease: true
         title: "Ghidra Findcrypt Nightly (${{steps.date.outputs.date}})"
-        files: Findcrypt_Ghidra_*/*GhidraFindcrypt.zip
+        files: Findcrypt_Ghidra_*/*.zip
 
     - name: Release stable
       if: contains(github.ref, 'refs/tags/v')
@@ -80,4 +81,4 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: false
         title: "Ghidra Findcrypt ${{github.ref_name}}"
-        files: Findcrypt_Ghidra_*/*GhidraFindcrypt.zip
+        files: Findcrypt_Ghidra_*/*.zip
