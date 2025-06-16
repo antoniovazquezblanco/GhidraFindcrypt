@@ -19,7 +19,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Check and update Ghidra versions
-        uses: antoniovazquezblanco/setup-ghidra-update@v0.0.2
+        uses: antoniovazquezblanco/setup-ghidra-update@v0.0.3
         with:
           auth_token: ${{ secrets.GITHUB_TOKEN }}
 
