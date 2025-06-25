@@ -46,32 +46,17 @@ jobs:
           path: dist/*.zip
 
   release:
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
     needs: build
+    if: contains(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
 
     steps:
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
       - name: Download binaries
         uses: actions/download-artifact@v4
 
-      - name: Release nightly
-        if: github.ref == 'refs/heads/main'
-        uses: marvinpinto/action-automatic-releases@v1.2.1
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Ghidra Findcrypt Nightly (${{steps.date.outputs.date}})"
-          files: Findcrypt_Ghidra_*/*.zip
-
-      - name: Release stable
-        if: contains(github.ref, 'refs/tags/v')
-        uses: marvinpinto/action-automatic-releases@v1.2.1
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          title: "Ghidra Findcrypt ${{github.ref_name}}"
           files: Findcrypt_Ghidra_*/*.zip
