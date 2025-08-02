@@ -16,6 +16,7 @@ jobs:
           - 11.3.1
           - 11.3.2
           - "11.4"
+          - 11.4.1
 
     steps:
       - name: Clone Repository
