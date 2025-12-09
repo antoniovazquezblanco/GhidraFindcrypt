@@ -25,6 +25,7 @@ jobs:
           auth_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
+        id: create-pr
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TOKEN_GHIDRA_UPDATE }}
@@ -32,6 +33,13 @@ jobs:
           branch: dependabot_setup_ghidra
           delete-branch: true
           title: 'Bump Ghidra version'
+          body: Bump Ghidra versions in the setup-ghidra action to the latest available versions.
+          assignees: antoniovazquezblanco
           labels: |
             dependencies
             github_actions
+
+      - name: Comment on PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr comment ${{ steps.create-pr.outputs.pull-request-number }} --body "@antoniovazquezblanco A new pull request has been created for the Ghidra version bump."
