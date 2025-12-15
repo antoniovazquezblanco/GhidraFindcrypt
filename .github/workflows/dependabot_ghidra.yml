@@ -40,6 +40,7 @@ jobs:
             github_actions
 
       - name: Comment on PR
+        if: steps.create-pr.outputs.pull-request-number != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr comment ${{ steps.create-pr.outputs.pull-request-number }} --body "@antoniovazquezblanco A new pull request has been created for the Ghidra version bump."
