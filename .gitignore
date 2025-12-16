@@ -1,10 +1,17 @@
+# Output files
 bin/
 dist/
 build/
+
+# JDT
 .classpath
-.project
-.pydevproject
+
+# Gradle
 .gradle
+
+# Eclipse
+.project
 .settings
-.idea
+
+# MAC OS
 .DS_Store
