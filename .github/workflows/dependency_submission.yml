@@ -1,0 +1,32 @@
+name: Dependency Submission
+
+on:
+  push:
+    branches: [ 'main' ]
+
+permissions:
+  contents: write
+
+jobs:
+  dependency-submission:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 21
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
+
+    - name: Setup Ghidra
+      uses: antoniovazquezblanco/setup-ghidra@v2.0.17
+      with:
+        auth_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Generate and submit dependency graph
+      uses: gradle/actions/dependency-submission@v5
