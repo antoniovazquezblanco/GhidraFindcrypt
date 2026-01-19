@@ -50,7 +50,7 @@ jobs:
 
     - name: Install Ghidra
       if: matrix.language == 'java-kotlin'
-      uses: antoniovazquezblanco/setup-ghidra@v2.0.17
+      uses: antoniovazquezblanco/setup-ghidra@v2.0.18
       with:
         auth_token: ${{ secrets.GITHUB_TOKEN }}
 
