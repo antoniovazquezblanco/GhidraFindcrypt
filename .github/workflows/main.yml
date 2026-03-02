@@ -47,7 +47,7 @@ jobs:
         run: gradle buildExtension
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Findcrypt_Ghidra_${{ matrix.ghidra }}
           path: dist/*.zip
