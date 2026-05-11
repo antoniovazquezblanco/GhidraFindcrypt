@@ -24,7 +24,7 @@ jobs:
       uses: gradle/actions/setup-gradle@v6
 
     - name: Setup Ghidra
-      uses: antoniovazquezblanco/setup-ghidra@v2.1.1
+      uses: antoniovazquezblanco/setup-ghidra@v2.1.2
       with:
         auth_token: ${{ secrets.GITHUB_TOKEN }}
 
