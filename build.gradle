@@ -31,3 +31,45 @@ else {
 	throw new GradleException("GHIDRA_INSTALL_DIR is not defined!")
 }
 //----------------------END "DO NOT MODIFY" SECTION-------------------------------
+
+def extensionName = project.name
+
+def ghidraUserExtensionsDir = {
+	def overrideProp = project.findProperty("GHIDRA_USER_EXTENSIONS_DIR")
+	if (overrideProp) {
+		return file(overrideProp.toString())
+	}
+	def overrideEnv = System.getenv("GHIDRA_USER_EXTENSIONS_DIR")
+	if (overrideEnv) {
+		return file(overrideEnv)
+	}
+
+	def osName = (System.getProperty("os.name") ?: "").toLowerCase(Locale.ROOT)
+	def ghidraUserProfileDirName = "${DISTRO_PREFIX}_${RELEASE_NAME}"
+
+	if (osName.contains("windows")) {
+		def appData = System.getenv("APPDATA")
+		if (appData) {
+			return file("${appData}/ghidra/${ghidraUserProfileDirName}/Extensions")
+		}
+	}
+
+	if (osName.contains("mac") || osName.contains("darwin")) {
+		return file("${System.getProperty('user.home')}/Library/ghidra/${ghidraUserProfileDirName}/Extensions")
+	}
+
+	def xdgConfigHome = System.getenv("XDG_CONFIG_HOME")
+	def linuxConfigDir = xdgConfigHome ?: "${System.getProperty('user.home')}/.config"
+	return file("${linuxConfigDir}/ghidra/${ghidraUserProfileDirName}/Extensions")
+}.call()
+
+def buildZipProvider = tasks.named('buildExtension', Zip).flatMap { it.archiveFile }
+
+tasks.register('installExtension', Copy) {
+	group = "Ghidra"
+	description = "Extract the built extension into Ghidra's user Extensions folder"
+	dependsOn tasks.named('buildExtension')
+	delete new File(ghidraUserExtensionsDir, extensionName)
+	from { zipTree(buildZipProvider.get().asFile) }
+	into ghidraUserExtensionsDir
+}
