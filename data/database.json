@@ -28,12 +28,28 @@
     "hexBytes":"886A3F24D308A3852E8A191344737003223809A4D0319F2998FA2E08896C4EEC"
   },
   {
-    "name":"TEA_DELTA",
+    "name":"TEA_XTEA_XXTEA_DELTA",
     "hexBytes":"B979379E"
   },
   {
-    "name":"TEA_ALTERNATIVE_DELTA",
+    "name":"TEA_XTEA_XXTEA_DELTA_BE",
+    "hexBytes":"9E3779B9"
+  },
+  {
+    "name":"TEA_XTEA_XXTEA_DELTA_NEG",
     "hexBytes":"4786C861"
+  },
+  {
+    "name":"TEA_XTEA_XXTEA_DELTA_NEG_BE",
+    "hexBytes":"61C88647"
+  },
+  {
+    "name":"TEA_XTEA_DECRYPT_SUM",
+    "hexBytes":"2037EFC6"
+  },
+  {
+    "name":"TEA_XTEA_DECRYPT_SUM_BE",
+    "hexBytes":"C6EF3720"
   },
   {
     "name":"Sosemanuk_MulTables_B32",
