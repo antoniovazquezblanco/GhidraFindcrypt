@@ -78,7 +78,7 @@ task installExtension(type: Copy) {
 	dependsOn buildExtension, uninstallExtension
 	from zipTree(buildExtension.archiveFile)
 	into ghidraUserExtensionsDir
-	doLast { println "[*] Installed ${extensionName} into ${installedExtensionDir}" }
+	doLast { println "[*] Installed ${project.name} into ${installedExtensionDir}" }
 }
 
 task runInGhidra(type: Exec) {
