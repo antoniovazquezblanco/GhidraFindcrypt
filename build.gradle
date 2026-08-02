@@ -31,3 +31,60 @@ else {
 	throw new GradleException("GHIDRA_INSTALL_DIR is not defined!")
 }
 //----------------------END "DO NOT MODIFY" SECTION-------------------------------
+
+// Ghidra's per-user extension directory.
+def ghidraUserExtensionsDir = {
+	// 1. An explicit override (project property, then env variable).
+	def overrideProp = project.findProperty("GHIDRA_USER_EXTENSIONS_DIR")
+	if (overrideProp) {
+		return file(overrideProp.toString())
+	}
+	def overrideEnv = System.getenv("GHIDRA_USER_EXTENSIONS_DIR")
+	if (overrideEnv) {
+		return file(overrideEnv)
+	}
+
+	// 2. Otherwise derive the versioned profile name from the target install,
+	//    e.g. "ghidra_11.3_PUBLIC".
+	def props = new Properties()
+	file("${ghidraInstallDir}/Ghidra/application.properties").withInputStream { props.load(it) }
+	def profile = "ghidra_${props.getProperty('application.version')}_" +
+			"${props.getProperty('application.release.name').toUpperCase()}"
+
+	// 3. Locate the settings root. Ghidra follows the XDG Base Directory spec,
+	//    defaulting to %APPDATA% on Windows and ~/.config elsewhere when
+	//    XDG_CONFIG_HOME is not set.
+	def configHome = System.getenv("XDG_CONFIG_HOME")
+	if (!configHome) {
+		def isWindows = System.getProperty("os.name").toLowerCase().contains("win")
+		configHome = isWindows ? System.getenv("APPDATA") : "${System.getProperty('user.home')}/.config"
+	}
+	return file("${configHome}/ghidra/${profile}/Extensions")
+}()
+
+// Captured at configuration time so task actions never touch Task.project at execution.
+def installedExtensionDir = new File(ghidraUserExtensionsDir, project.name)
+
+task uninstallExtension(type: Delete) {
+	group = "Ghidra"
+	description = "Removes this extension from the target Ghidra installation."
+	delete installedExtensionDir
+}
+
+task installExtension(type: Copy) {
+	group = "Ghidra"
+	description = "Builds the extension and installs it into the target Ghidra installation."
+	// Rebuild, and wipe any previous copy first so files removed between builds don't linger.
+	dependsOn buildExtension, uninstallExtension
+	from zipTree(buildExtension.archiveFile)
+	into ghidraUserExtensionsDir
+	doLast { println "[*] Installed ${extensionName} into ${installedExtensionDir}" }
+}
+
+task runInGhidra(type: Exec) {
+	group = "Ghidra"
+	description = "Installs the extension and launches Ghidra (blocks until Ghidra exits)."
+	dependsOn installExtension
+	def isWindows = System.getProperty("os.name").toLowerCase().contains("win")
+	executable = new File(ghidraInstallDir, isWindows ? "ghidraRun.bat" : "ghidraRun")
+}
