@@ -21,7 +21,7 @@ jobs:
         java-version: 21
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v6
+      uses: gradle/actions/setup-gradle@v6.2.0
 
     - name: Setup Ghidra
       uses: antoniovazquezblanco/setup-ghidra@v2.1.4
@@ -29,4 +29,4 @@ jobs:
         auth_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@v6
+      uses: gradle/actions/dependency-submission@v6.2.0
