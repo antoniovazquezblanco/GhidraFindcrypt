@@ -26,6 +26,7 @@ jobs:
           - "12.0.4"
           - "12.1"
           - "12.1.2"
+          - "12.1.3"
 
     steps:
       - name: Clone Repository
