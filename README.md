@@ -3,6 +3,8 @@
 ![Bug eyed Ghidra looks at complex algorithms](docs/findcrypt_logo.png)
 
 [![Build](https://github.com/antoniovazquezblanco/GhidraFindcrypt/actions/workflows/main.yml/badge.svg)](https://github.com/antoniovazquezblanco/GhidraFindcrypt/actions/workflows/main.yml)
+[![CodeQL](https://github.com/antoniovazquezblanco/GhidraFindcrypt/actions/workflows/codeql.yml/badge.svg)](https://github.com/antoniovazquezblanco/GhidraFindcrypt/actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/antoniovazquezblanco/GhidraFindcrypt/badge)](https://scorecard.dev/viewer/?uri=github.com/antoniovazquezblanco/GhidraFindcrypt)
 
 This is a fork of another [Ghidra FindCrypt](https://github.com/TorgoTorgo/ghidra-findcrypt) that is a re-write of another [Ghidra FindCrypt](https://github.com/d3v1l401/FindCrypt-Ghidra/) script as an auto analysis module. It also takes better advantage of the Ghidra API to label found constants.
 
