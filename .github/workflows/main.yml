@@ -42,7 +42,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6.3.0
 
       - name: Install Ghidra ${{ matrix.ghidra }}
-        uses: antoniovazquezblanco/setup-ghidra@v2.1.5
+        uses: antoniovazquezblanco/setup-ghidra@v2.1.6
         with:
           auth_token: ${{ secrets.GITHUB_TOKEN }}
           version: ${{ matrix.ghidra }}
