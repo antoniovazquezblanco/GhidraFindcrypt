@@ -1,7 +1,7 @@
 name: Build
 on: [ push, pull_request, workflow_dispatch ]
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
