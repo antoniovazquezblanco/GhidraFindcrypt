@@ -39,11 +39,18 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v7
 
-      - name: Install Java
+      - name: Install Ghidra ${{ matrix.ghidra }}
+        id: setup-ghidra
+        uses: antoniovazquezblanco/setup-ghidra@v2.3.0
+        with:
+          auth_token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ matrix.ghidra }}
+
+      - name: Install Java ${{ steps.setup-ghidra.outputs.java_version }}
         uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: ${{ steps.setup-ghidra.outputs.java_version }}
 
       - name: Install Gradle
         uses: gradle/actions/setup-gradle@v6.4.0
