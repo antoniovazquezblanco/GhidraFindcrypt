@@ -81,13 +81,13 @@ public class FindCryptAnalyzer extends AbstractAnalyzer {
 		}
 
 		for (CryptSignature signature : database.getSignatures()) {
-			monitor.checkCanceled();
+			monitor.checkCancelled();
 			
 			// We'll start searching from the top of the newly added address range
 			Address search_from = set.getMinAddress();
 			
 			while (search_from != null) {
-				monitor.checkCanceled();
+				monitor.checkCancelled();
 				
 				// Starting at min_address, find the next occurrence of the bytes from the signature
 				Address found_addr = program.getMemory().findBytes(search_from,
