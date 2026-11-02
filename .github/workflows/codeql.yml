@@ -53,7 +53,7 @@ jobs:
 
     - name: Install Gradle
       if: matrix.language == 'java-kotlin'
-      uses: gradle/actions/setup-gradle@v6.4.0
+      uses: gradle/actions/setup-gradle@v6.4.1
 
     - name: Build
       if: matrix.language == 'java-kotlin'
