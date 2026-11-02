@@ -27,4 +27,4 @@ jobs:
         java-version: ${{ steps.setup-ghidra.outputs.java_version }}
 
     - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@v6.4.0
+      uses: gradle/actions/dependency-submission@v6.4.1
