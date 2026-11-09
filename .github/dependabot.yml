@@ -5,9 +5,17 @@ updates:
     target-branch: "main"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: "gradle"
     directory: "/"
     target-branch: "main"
     schedule:
       interval: "weekly"
+    groups:
+      gradle:
+        patterns:
+          - "*"
