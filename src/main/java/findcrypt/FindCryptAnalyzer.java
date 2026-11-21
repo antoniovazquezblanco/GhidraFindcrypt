@@ -68,7 +68,7 @@ public class FindCryptAnalyzer extends AbstractAnalyzer {
 		// If the database hasn't yet been opened, we'll open it
 		if (this.database == null) {
 			try {
-				this.database = new CryptDatabase();
+				this.database = new CryptDatabase(program.getLanguage().isBigEndian());
 				ResourceFile resourceFile = Application.getModuleDataFile("database.json");
 				Msg.info(this, "Loading FindCrypt signature database from file");
 
